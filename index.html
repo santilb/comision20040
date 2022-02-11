@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Simulador de Prestamo | Comision 20040</title>
+</head>
+<body>
+    <div class="container">
+    <header>
+        <nav class="navbar navbar-dark bg-primary">
+        <div class="container px-4">
+        <a class="navbar-brand" href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" class="d-inline-block align-text-top" width="30" height="24" fill="currentColor" class="bi bi-bank" viewBox="0 0 16 16">
+                <path d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z"/>
+            </svg>
+        SIMULADO DE PRESTAMO
+        </a>
+        </div> 
+    </nav>
+    </header>
+    <section class="jumbotron text-center rounded bg-light">
+        <div class="container">
+        <h1 class="jumbotron-heading display-4">Cotizador de Prestamos</h1>
+        <p class="lead text-muted">Javascript - Proyecto Final Comision 20040</p>
+        <p>
+            <button type="button" class="btn btn-outline-primary bg-light">Prestamo Frances</button>
+            <button type="button" class="btn btn-outline-secondary">Prestamo Aleman</button>
+        </p>
+        </div>
+    </section>
+    </div>
+    <div class="container h5 cotizador">
+        <p class="titulo1"></p>
+        <p>Ingrese Monto : <input class="form-control" id="monto" type="number" name="monto" placeholder="Maximo $10.000.000-"></p>
+        <p>Plazo en Meses : <input class="form-control" id="plazo" type="number" name="plazo" placeholder="Plazo"></p>
+        <p>Tasa Nominal Anual : <input class="form-control" id="tna" type="number" name="tna" placeholder="TNA"></p>
+        <button id="botonPrestamo" class="btn btn-lg btn-primary btn-block" type="submit">Conocer Perstamo</button>
+        <hr>
+    </div>
+    <div class="container text-center">
+        <div class="row bg-light">
+        <table class="table table-striped detalle">
+            
+        </table>
+        </div>
+    </div>
+</div>
+    <!--  -->
+    <script src="js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

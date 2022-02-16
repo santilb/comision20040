@@ -8,6 +8,8 @@ class detallePrestamo {
   }
 }
 
+
+
 const montoInput  = document.querySelector("#monto");
 const plazoInput  = document.querySelector("#plazo");
 const tnaInput = document.querySelector("#tna");
@@ -30,6 +32,12 @@ let input2  = document.getElementById("plazo");
 input2.onchange = () =>  cambioMeses();
 let input3  = document.getElementById("tna");
 input3.onchange = () =>  cambioTna();
+let botonFrances = document.getElementById("botonFrances");
+botonFrances.onclick = () => pFrances();
+let botonAleman = document.getElementById("botonAleman");
+botonAleman.onclick = () => pAleman();
+
+
 
 function principal () {
 
@@ -54,6 +62,25 @@ function principal () {
     console.log(prestamo);
   }
   
+}
+
+function pFrances (){
+  sessionStorage.setItem('tipoPrestamo','frances')
+  console.log(sessionStorage.getItem('tipoPrestamo'));
+  botonAleman.classList.remove("btn-secondary");
+  botonAleman.classList.add("btn-outline-secondary")
+  botonFrances.classList.add("btn-primary");
+  botonFrances.classList.remove("btn-outline-primary");
+}
+
+function pAleman (){
+  sessionStorage.setItem('tipoPrestamo','aleman')
+  console.log(sessionStorage.getItem('tipoPrestamo'));
+  botonFrances.classList.remove("btn-primary");
+  botonFrances.classList.add("btn-outline-primary");
+  botonAleman.classList.add("btn-secondary");
+  botonAleman.classList.remove("btn-outline-secondary")
+
 }
 
 function cambioMonto() {

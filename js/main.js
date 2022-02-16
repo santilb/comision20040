@@ -59,7 +59,11 @@ function principal () {
     calculo();
     detalleCuota();
     muestroCuotas();
+
+    const pJSON = JSON.stringify(prestamo);
+    sessionStorage.setItem('ultimoPrestamo', pJSON);
     console.log(prestamo);
+    console.log(JSON.parse(sessionStorage.getItem('ultimoPrestamo')));
   }
   
 }
@@ -171,4 +175,4 @@ function detalleCuota() {
   }
 }
 
-console.log(prestamo);
+

@@ -1,3 +1,4 @@
+/*Declaro Clases*/
 class detallePrestamo {
   constructor(cuota,interes,capital,valorCuota,saldo){
     this.cuota = cuota.toFixed(2);
@@ -8,8 +9,7 @@ class detallePrestamo {
   }
 }
 
-
-
+/*Selecciono Secciones HTML*/
 const montoInput  = document.querySelector("#monto");
 const plazoInput  = document.querySelector("#plazo");
 const tnaInput = document.querySelector("#tna");
@@ -24,6 +24,7 @@ let tna;
 let cuota = 0;
 let interes = 0;
 
+/*botones de eventos*/
 let boton = document.getElementById("botonPrestamo");
 boton.onclick = () => principal(); 
 let input1  = document.getElementById("monto");
@@ -38,16 +39,13 @@ let botonAleman = document.getElementById("botonAleman");
 botonAleman.onclick = () => pAleman();
 
 
+/*Funciones*/
 
 function principal () {
+/*Operador Logico AND*/
+document.querySelector(".alert-danger") && document.querySelector(".alert").remove();
 
-  if (document.querySelector(".alert-danger")){
-    document.querySelector(".alert").remove();
-  }
-
-
-  if ( valor == 0 || meses == 0 || tna == 0 || isNaN(valor) || isNaN(meses) || isNaN(tna)) { 
-
+if ( valor == 0 || meses == 0 || tna == 0 || isNaN(valor) || isNaN(meses) || isNaN(tna)) { 
     let alerta = document.createElement("div")
     alerta.innerHTML = '<div id="alert1" class="alert alert-danger" role="alert">Revise los datos ingresados</div>';
     alertas.append(alerta);
@@ -87,8 +85,7 @@ function pAleman (){
 
 }
 
-function cambioMonto() {
-  
+function cambioMonto() { 
   valor = montoInput.value;
 
   if (valor <= 0 || valor >10000000){
@@ -98,6 +95,7 @@ function cambioMonto() {
     valor = montoInput.value;
   }  
 }
+
 function cambioMeses() {
   meses = plazoInput.value;
 
@@ -154,14 +152,7 @@ function calculo() {
   interes = tna / 1200;
   let factor = Math.pow(interes + 1, meses);
   cuota = (valor * interes * factor) / (factor - 1);
-  alert(
-    "La cuota por $" +
-      valor +
-      " a " +
-      meses +
-      " meses es de " +
-      cuota.toFixed(2)
-  );
+  /*alert("La cuota por $" +valor +" a " + meses + " meses es de " + cuota.toFixed(2));*/
 }
 
 function detalleCuota() {

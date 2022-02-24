@@ -16,8 +16,9 @@ const tnaInput = document.querySelector("#tna");
 const detalle = document.querySelector(".detalle");
 const alertas = document.querySelector(".titulo1");
 
-const prestamo = [];
+let prestamo = [];
 
+let falsy;
 let valor;
 let meses;
 let tna;
@@ -42,30 +43,29 @@ botonAleman.onclick = () => pAleman();
 /*Funciones*/
 
 function principal () {
-/*Operador Logico AND*/
+  
 document.querySelector(".alert-danger") && document.querySelector(".alert").remove();
 
-if ( valor == 0 || meses == 0 || tna == 0 || isNaN(valor) || isNaN(meses) || isNaN(tna)) { 
-    let alerta = document.createElement("div")
-    alerta.innerHTML = '<div id="alert1" class="alert alert-danger" role="alert">Revise los datos ingresados</div>';
-    alertas.append(alerta);
-    cambioMonto();
-    cambioMeses();
-    cambioTna();
-
-  } else { 
-    calculo();
-    detalleCuota();
-    muestroCuotas();
-
-    const pJSON = JSON.stringify(prestamo);
-    sessionStorage.setItem('ultimoPrestamo', pJSON);
-    console.log(prestamo);
-    console.log(JSON.parse(sessionStorage.getItem('ultimoPrestamo')));
-  }
+!valor || !meses || !tna ? (campoVacio(), cambioMonto(), cambioMeses(), cambioTna()) : 
+    (
+    calculo(), detalleCuota(), muestroCuotas(),
+    pJSON = JSON.stringify(prestamo),
+    sessionStorage.setItem('ultimoPrestamo', pJSON),
+    console.log(prestamo),
+    console.log(JSON.parse(sessionStorage.getItem('ultimoPrestamo')))
+    )
   
 }
 
+/*Alerta Campos Vacios */
+function campoVacio() {
+  document.querySelector(".alert-danger") && document.querySelector(".alert").remove();
+  let alerta = document.createElement("div")
+  alerta.innerHTML = '<div id="alert1" class="alert alert-danger" role="alert">Revise los datos ingresados</div>';
+  alertas.append(alerta);
+}
+
+/*Chequea el cambio en el boton Frances*/
 function pFrances (){
   sessionStorage.setItem('tipoPrestamo','frances')
   console.log(sessionStorage.getItem('tipoPrestamo'));
@@ -75,6 +75,7 @@ function pFrances (){
   botonFrances.classList.remove("btn-outline-primary");
 }
 
+/*Chequea el cambio en el boton Aleman*/
 function pAleman (){
   sessionStorage.setItem('tipoPrestamo','aleman')
   console.log(sessionStorage.getItem('tipoPrestamo'));
@@ -85,41 +86,37 @@ function pAleman (){
 
 }
 
+/*Chequea el cambio en el campo monto*/
 function cambioMonto() { 
   valor = montoInput.value;
 
-  if (valor <= 0 || valor >10000000){
-    input1.classList.add('is-invalid');
-  } else {
-    input1.classList.remove('is-invalid')
-    valor = montoInput.value;
-  }  
+  valor <= 0 || valor >10000000 ? 
+    input1.classList.add('is-invalid') : ( input1.classList.remove('is-invalid'),
+    valor = montoInput.value)
 }
 
+/*Chequea el cambio en el campo Meses*/
 function cambioMeses() {
+
   meses = plazoInput.value;
 
-  if ( meses <= 0 || meses >100){
-    input2.classList.add('is-invalid');
-  } else {
-    input2.classList.remove('is-invalid')
-    meses = plazoInput.value;
-  }  
+  meses <= 0 || meses >100 ?
+    input2.classList.add('is-invalid') : (input2.classList.remove('is-invalid'),
+    meses = plazoInput.value)
 
 }
+
+/*Chequea el cambio en el campo TNA*/
 function cambioTna() {
   tna = tnaInput.value;
 
-  if (tna <= 0 || tna >100){
-    input3.classList.add('is-invalid');
-
-  } else {
-
-    input3.classList.remove('is-invalid')
-    tna = tnaInput.value;
-  }  
+  tna <= 0 || tna >100 ? input3.classList.add('is-invalid')
+  :
+  (input3.classList.remove('is-invalid'),
+  tna = tnaInput.value)
 }
 
+/*Armo tabla con cuotas*/
 function muestroCuotas(){
 
   let filas = detalle.rows.length;
@@ -139,30 +136,34 @@ detalle.appendChild(encabezado);
 detalle.appendChild(cuerpo);
 
   for (const cuotadetalle of prestamo){
+
+    const {cuota, interes, capital, valorCuota, saldo} = cuotadetalle;
+
     let tabla = document.createElement("tr");
-    tabla.innerHTML = "<td>"+parseInt(cuotadetalle.cuota)+"</td><td>$"+cuotadetalle.interes+
-                      "</td><td>$"+cuotadetalle.capital+"</td><td>$"+cuotadetalle.valorCuota+
-                      "</td><td>$"+ cuotadetalle.saldo;
+    tabla.innerHTML = "<td>"+parseInt(cuota)+"</td><td>$"+interes+
+                      "</td><td>$"+capital+"</td><td>$"+valorCuota+
+                      "</td><td>$"+ saldo;
     cuerpo.appendChild(tabla);
   }
 }
 
+/*Calcula las cuotas del prestamo*/
 function calculo() {
   valor = montoInput.value;
   interes = tna / 1200;
   let factor = Math.pow(interes + 1, meses);
   cuota = (valor * interes * factor) / (factor - 1);
-  /*alert("La cuota por $" +valor +" a " + meses + " meses es de " + cuota.toFixed(2));*/
 }
 
+/*Armo prestamo*/
 function detalleCuota() {
+
   while (prestamo.length) { 
     prestamo.pop(); 
 }
-
   for (let i = 0; i <= meses - 1; i++) {
     valor = valor - (cuota-(valor*interes));
-    prestamo.push(new detallePrestamo(i+1,valor*interes,cuota-(valor*interes),cuota,valor));   
+    prestamo = [... prestamo, new detallePrestamo(i+1,valor*interes,cuota-(valor*interes),cuota,valor)];   
   }
 }
 

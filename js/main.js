@@ -43,7 +43,8 @@ botonAleman.onclick = () => pAleman();
 /*Funciones*/
 
 function principal () {
-  
+
+
 document.querySelector(".alert-danger") && document.querySelector(".alert").remove();
 
 !valor || !meses || !tna ? (campoVacio(), cambioMonto(), cambioMeses(), cambioTna()) : 
@@ -119,7 +120,24 @@ function cambioTna() {
 /*Armo tabla con cuotas*/
 function muestroCuotas(){
 
-  let filas = detalle.rows.length;
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  
+  Toast.fire({
+    icon: 'info',
+    title: 'Simulando Prestamo'
+  })
+
+let filas = detalle.rows.length;
   if (filas != 0 ) {
     for (let i = 0; i < filas; i++) {
       detalle.deleteRow(0);
@@ -135,6 +153,8 @@ encabezado.innerHTML = '<tr><th scope="col">#Cuota</th>'+
 detalle.appendChild(encabezado);
 detalle.appendChild(cuerpo);
 
+setTimeout(() => {
+  
   for (const cuotadetalle of prestamo){
 
     const {cuota, interes, capital, valorCuota, saldo} = cuotadetalle;
@@ -145,6 +165,8 @@ detalle.appendChild(cuerpo);
                       "</td><td>$"+ saldo;
     cuerpo.appendChild(tabla);
   }
+
+}, 2500);
 }
 
 /*Calcula las cuotas del prestamo*/
@@ -153,6 +175,13 @@ function calculo() {
   interes = tna / 1200;
   let factor = Math.pow(interes + 1, meses);
   cuota = (valor * interes * factor) / (factor - 1);
+
+  Swal.fire({
+    icon: 'info',
+    title: 'Simulacion de Prestamo por $'+valor+' pesos AR' ,
+    text: 'Su cuota sera de $'+cuota.toFixed(2)+'.',
+  })
+
 }
 
 /*Armo prestamo*/

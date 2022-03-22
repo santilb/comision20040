@@ -27,6 +27,7 @@ let meses;
 let tna;
 let cuota = 0;
 let interes = 0;
+let aleman = false;
 
 /*botones de eventos*/
 let boton = document.getElementById("botonPrestamo");
@@ -77,6 +78,7 @@ function pFrances (){
   botonAleman.classList.add("btn-outline-secondary")
   botonFrances.classList.add("btn-primary");
   botonFrances.classList.remove("btn-outline-primary");
+  aleman=false;
 }
 
 /*Chequea el cambio en el boton Aleman*/
@@ -87,7 +89,7 @@ function pAleman (){
   botonFrances.classList.add("btn-outline-primary");
   botonAleman.classList.add("btn-secondary");
   botonAleman.classList.remove("btn-outline-secondary")
-
+  aleman=true;
 }
 
 /*Chequea el cambio en el campo monto*/
@@ -118,6 +120,7 @@ function cambioTna() {
   :
   (input3.classList.remove('is-invalid'),
   tna = tnaInput.value)
+
 }
 
 /*Armo tabla con cuotas*/
@@ -132,6 +135,7 @@ function muestroCuotas(){
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer)
       toast.addEventListener('mouseleave', Swal.resumeTimer)
+
     }
   })
   
@@ -174,18 +178,21 @@ setTimeout(() => {
 
 /*Calcula las cuotas del prestamo*/
 function calculo() {
-  valor = montoInput.value;
-  interes = tna / 1200;
-  let factor = Math.pow(interes + 1, meses);
-  cuota = (valor * interes * factor) / (factor - 1);
 
-  Swal.fire({
-    icon: 'info',
-    title: 'Simulacion de Prestamo por $'+valor+' pesos AR' ,
-    text: 'Su cuota sera de $'+cuota.toFixed(2)+'.',
-  })
+    valor = montoInput.value;
+    interes = tna / 1200;
+    let factor = Math.pow(interes + 1, meses);
+    cuota = (valor * interes * factor) / (factor - 1);
+  
+    Swal.fire({
+      icon: 'info',
+      title: 'Simulacion de Prestamo por $'+valor+' pesos AR' ,
+      text: 'Su cuota sera de $'+cuota.toFixed(2)+'.',
 
-}
+    })
+    
+  }
+
 
 /*Armo prestamo*/
 function detalleCuota() {
@@ -206,7 +213,6 @@ fetch('https://weatherdbi.herokuapp.com/data/weather/bsas')
   .then( (data) => {
     console.log(data)
     clima.innerHTML="La temperatura en Buenos Aires es de "+data.currentConditions.temp.c+"  ° y la humedad del "+data.currentConditions.humidity
-
 
   })
   .catch((error) => {

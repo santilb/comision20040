@@ -22,6 +22,7 @@ const clima = document.querySelector("#clima");
 let prestamo = [];
 
 let falsy;
+let monto;
 let valor;
 let meses;
 let tna;
@@ -179,11 +180,23 @@ setTimeout(() => {
 /*Calcula las cuotas del prestamo*/
 function calculo() {
 
-    valor = montoInput.value;
-    interes = tna / 1200;
-    let factor = Math.pow(interes + 1, meses);
+  valor = montoInput.value;
+  monto = montoInput.value;
+
+  interes = tna / 1200;
+  let factor = Math.pow(interes + 1, meses);
+
+  if (!aleman){
+
     cuota = (valor * interes * factor) / (factor - 1);
   
+  } else {
+
+    cuota = (valor * interes * factor) / (factor - 1);
+    capital = (valor / meses);
+
+  }
+
     Swal.fire({
       icon: 'info',
       title: 'Simulacion de Prestamo por $'+valor+' pesos AR' ,
@@ -200,10 +213,31 @@ function detalleCuota() {
   while (prestamo.length) { 
     prestamo.pop(); 
 }
+
+if (!aleman) {
+
+  console.log("PRESTAMO FRANCEEEESSSS!!!!")
   for (let i = 0; i <= meses - 1; i++) {
+    
     valor = valor - (cuota-(valor*interes));
+
     prestamo = [... prestamo, new detallePrestamo(i+1,valor*interes,cuota-(valor*interes),cuota,valor)];   
+    
   }
+
+} else {
+  console.log("PRESTAMO ALEMANNNNNNN!!!!")
+  
+  for (let i = 0; i <= meses - 1; i++) {
+    
+    valor = valor - capital; 
+
+    prestamo = [... prestamo, new detallePrestamo(i+1,valor*interes,capital,capital+(valor*interes),valor)]; 
+
+  }
+
+}
+
 }
 
 function apiClima (){

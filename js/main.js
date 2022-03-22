@@ -9,12 +9,15 @@ class detallePrestamo {
   }
 }
 
+apiClima();
+
 /*Selecciono Secciones HTML*/
 const montoInput  = document.querySelector("#monto");
 const plazoInput  = document.querySelector("#plazo");
 const tnaInput = document.querySelector("#tna");
 const detalle = document.querySelector(".detalle");
 const alertas = document.querySelector(".titulo1");
+const clima = document.querySelector("#clima");
 
 let prestamo = [];
 
@@ -196,4 +199,18 @@ function detalleCuota() {
   }
 }
 
+function apiClima (){
+
+fetch('https://weatherdbi.herokuapp.com/data/weather/bsas')
+  .then( resp => resp.json() )
+  .then( (data) => {
+    console.log(data)
+    clima.innerHTML="La temperatura en Buenos Aires es de "+data.currentConditions.temp.c+"  ° y la humedad del "+data.currentConditions.humidity
+
+
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+}
 

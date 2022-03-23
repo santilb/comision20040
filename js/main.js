@@ -145,6 +145,7 @@ function muestroCuotas(){
     title: 'Simulando Prestamo'
   })
 
+  
 let filas = detalle.rows.length;
   if (filas != 0 ) {
     for (let i = 0; i < filas; i++) {
@@ -175,6 +176,7 @@ setTimeout(() => {
   }
 
 }, 2500);
+
 }
 
 /*Calcula las cuotas del prestamo*/
@@ -185,24 +187,17 @@ function calculo() {
 
   interes = tna / 1200;
   let factor = Math.pow(interes + 1, meses);
+  cuota = (valor * interes * factor) / (factor - 1);
+  capital = (valor / meses);
 
-  if (!aleman){
-
-    cuota = (valor * interes * factor) / (factor - 1);
   
-  } else {
+  Swal.fire({
+    icon: 'info',
+    title: 'Simulacion de Prestamo por $'+valor+' pesos AR' ,
+    text: 'Su cuota sera de $'+cuota.toFixed(2)+'.',
 
-    cuota = (valor * interes * factor) / (factor - 1);
-    capital = (valor / meses);
+  })
 
-  }
-
-    Swal.fire({
-      icon: 'info',
-      title: 'Simulacion de Prestamo por $'+valor+' pesos AR' ,
-      text: 'Su cuota sera de $'+cuota.toFixed(2)+'.',
-
-    })
     
   }
 
@@ -210,32 +205,31 @@ function calculo() {
 /*Armo prestamo*/
 function detalleCuota() {
 
-  while (prestamo.length) { 
+while (prestamo.length) { 
     prestamo.pop(); 
 }
 
 if (!aleman) {
 
-  console.log("PRESTAMO FRANCEEEESSSS!!!!")
-  for (let i = 0; i <= meses - 1; i++) {
-    
+    for (let i = 0; i <= meses - 1; i++) { 
     valor = valor - (cuota-(valor*interes));
-
-    prestamo = [... prestamo, new detallePrestamo(i+1,valor*interes,cuota-(valor*interes),cuota,valor)];   
-    
+    if ( i == 0){
+      prestamo = [... prestamo, new detallePrestamo(i+1,monto*interes,cuota-(valor*interes),cuota,valor)];
+    }else {
+      prestamo = [... prestamo, new detallePrestamo(i+1,valor*interes,cuota-(valor*interes),cuota,valor)];   
+    }
   }
 
 } else {
-  console.log("PRESTAMO ALEMANNNNNNN!!!!")
-  
-  for (let i = 0; i <= meses - 1; i++) {
-    
+
+  for (let i = 0; i <= meses - 1; i++) {  
     valor = valor - capital; 
-
-    prestamo = [... prestamo, new detallePrestamo(i+1,valor*interes,capital,capital+(valor*interes),valor)]; 
-
+    if ( i == 0){
+      prestamo = [... prestamo, new detallePrestamo(i+1,monto*interes,capital,capital+(valor*interes),valor)]; 
+    } else {
+      prestamo = [... prestamo, new detallePrestamo(i+1,valor*interes,capital,capital+(valor*interes),valor)]; 
+    }
   }
-
 }
 
 }
